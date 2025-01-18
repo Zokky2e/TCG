@@ -22,6 +22,8 @@ public class CardDeckManager : MonoBehaviour
     public MenuController menuController;
     public bool isSolitaire = false;
     public GameObject solitairePilePlacements;
+    public GameObject dealCardsButton;
+    public GameObject emptyDeckImage;
     public SolitaireGameManager solitaireGameManager;
     void Start()
     {
@@ -116,6 +118,8 @@ public class CardDeckManager : MonoBehaviour
         dealButton.gameObject.SetActive(true);
         discardPile.gameObject.SetActive(true);
         solitairePilePlacements.gameObject.SetActive(false);
+        dealCardsButton.gameObject.SetActive(false);
+        emptyDeckImage.gameObject.SetActive(false);
     }
 
     public void ResetGame()

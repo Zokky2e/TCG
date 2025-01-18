@@ -114,7 +114,7 @@ public class CardDrag : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, I
 
         isDragging = false;
     }
-    private void FlipCard()
+    public void FlipCard()
     {
         isFlipped = !isFlipped;
         SetCardFaces();
@@ -137,10 +137,18 @@ public class CardDrag : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, I
         GameObject targetCard = GetDropTarget(eventData); 
         if (targetCard != null)
         {
-            float yOffset = -35f;
             GameObject finalChild = GetFinalChild(targetCard);
-            transform.SetParent(finalChild.transform);
-            rectTransform.anchoredPosition = new Vector2(0, yOffset);
+            if (IsAboveSolitaireColumnsArea(eventData)) 
+            {
+                float yOffset = -35f;
+                transform.SetParent(finalChild.transform);
+                rectTransform.anchoredPosition = new Vector2(0, yOffset);
+            }
+            else
+            {
+                transform.SetParent(finalChild.transform);
+                rectTransform.anchoredPosition = Vector2.zero;
+            }
         }
         else
         {
@@ -165,5 +173,21 @@ public class CardDrag : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, I
             }
         }
         return null;
+    }
+
+    private bool IsAboveSolitaireColumnsArea(PointerEventData eventData)
+    {
+        List<RaycastResult> results = new List<RaycastResult>();
+        EventSystem.current.RaycastAll(eventData, results);
+
+        foreach (RaycastResult result in results)
+        {
+            if (result.gameObject.CompareTag("SolitaireColumns"))
+            {
+                return true;
+            }
+        }
+
+        return false;
     }
 }
