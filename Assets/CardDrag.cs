@@ -142,7 +142,7 @@ public class CardDrag : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, I
         if (targetCard != null)
         {
             GameObject finalChild = GetFinalChild(targetCard);
-            if (IsAboveSolitaireColumnsArea(eventData)) 
+            if (IsAboveSolitaireColumnsArea(eventData) && !finalChild.name.Contains("SolitaireColumn")) 
             {
                 float yOffset = -35f;
                 transform.SetParent(finalChild.transform);
