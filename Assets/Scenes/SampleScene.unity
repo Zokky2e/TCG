@@ -289,8 +289,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -2.907, y: -173.3974}
-  m_SizeDelta: {x: 2680.3699, y: 593.4431}
+  m_AnchoredPosition: {x: -2.907, y: -216.72395}
+  m_SizeDelta: {x: 2680.3699, y: 680.1078}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &276219401
 MonoBehaviour:
@@ -1178,6 +1178,7 @@ MonoBehaviour:
   cardParent: {fileID: 601701149}
   solitaireColumns: {fileID: 276219400}
   cardDeckManager: {fileID: 344216434}
+  cardDeck: {fileID: 388631352}
 --- !u!224 &507278967
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2834,8 +2835,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0.0087891, y: 0.0010147}
-  m_SizeDelta: {x: 2060.5, y: 1006.3}
+  m_AnchoredPosition: {x: 12.2851, y: -3.5116}
+  m_SizeDelta: {x: 2794.6167, y: 1603.428}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1785601377
 MonoBehaviour:

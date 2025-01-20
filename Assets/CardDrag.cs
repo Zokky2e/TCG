@@ -16,6 +16,7 @@ public class CardDrag : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, I
     private const float clickThreshold = 0.2f;
     private const float dragThreshold = 5f;
     private bool isDragging = false;
+    private bool hasLeftDeck = false;
     public bool isFlipped = false;
 
     public RawImage frontImage;
@@ -28,6 +29,8 @@ public class CardDrag : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, I
         canvasGroup = GetComponent<CanvasGroup>();
         canvas = GetComponentInParent<Canvas>();
     }
+
+    public bool HasLeftDeck { get { return hasLeftDeck; } }
 
     // Called when the user presses down on the card
     public void OnPointerDown(PointerEventData eventData)
@@ -46,6 +49,7 @@ public class CardDrag : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, I
     // Called while the card is being dragged
     public void OnDrag(PointerEventData eventData)
     {
+        hasLeftDeck = true;
         Vector2 adjustedDelta = eventData.delta / canvas.scaleFactor;
         rectTransform.anchoredPosition += adjustedDelta;
         rectTransform.SetAsLastSibling();
@@ -175,7 +179,7 @@ public class CardDrag : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, I
         return null;
     }
 
-    private bool IsAboveSolitaireColumnsArea(PointerEventData eventData)
+    public bool IsAboveSolitaireColumnsArea(PointerEventData eventData)
     {
         List<RaycastResult> results = new List<RaycastResult>();
         EventSystem.current.RaycastAll(eventData, results);

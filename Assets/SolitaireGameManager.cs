@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEngine.EventSystems;
 
 public class SolitaireGameManager : MonoBehaviour
 {
@@ -9,6 +10,7 @@ public class SolitaireGameManager : MonoBehaviour
     private List<GameObject> remainingCards;
     private List<GameObject> dealtCards;
     public CardDeckManager cardDeckManager;
+    public GameObject cardDeck;
 
     public void HandleHidingObjects()
     {
@@ -41,17 +43,21 @@ public class SolitaireGameManager : MonoBehaviour
     {
         foreach (GameObject card in dealtCards) 
         {
-            remainingCards.Add(card);
             float cardWidth = -150f;
             float xOffset = -10f + cardWidth;
             RectTransform rect = card.GetComponent<RectTransform>();
-            RectTransform deckRect = cardDeckManager.dealCardsButton.GetComponent<RectTransform>();
-            rect.position = new Vector2(deckRect.anchoredPosition.x, deckRect.anchoredPosition.y);
 
             CardDrag cardDragScript = card.GetComponent<CardDrag>();
+            RectTransform deckRect = cardDeck.GetComponent<RectTransform>();
+
             if (cardDragScript != null)
             {
-                cardDragScript.FlipCard();
+                if (!cardDragScript.HasLeftDeck)
+                {
+                    remainingCards.Add(card);
+                    rect.anchoredPosition = deckRect.anchoredPosition;
+                    cardDragScript.FlipCard();
+                }
             }
         }
         dealtCards.Clear();
@@ -116,5 +122,4 @@ public class SolitaireGameManager : MonoBehaviour
         }
 
     }
-
 }
