@@ -1,6 +1,7 @@
 # Ignore Library folder (Unity cache)
 Library/
-
+# Ignore Temp folder (Unity cache)
+Temp/
 # Ignore Logs folder (Unity logs)
 Logs/
 
