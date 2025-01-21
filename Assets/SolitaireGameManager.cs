@@ -3,35 +3,31 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine.EventSystems;
 
-public class SolitaireGameManager : MonoBehaviour
+public class SolitaireGameManager : CardDeckManager
 {
-    public Transform cardParent;
     public Transform solitaireColumns;
-    private List<GameObject> remainingCards;
     private List<GameObject> dealtCards;
-    public CardDeckManager cardDeckManager;
+    private List<GameObject> remainingDeckCards;
     public GameObject cardDeck;
 
-    public void HandleHidingObjects()
+    public GameObject solitairePilePlacements;
+
+    new void Start()
     {
-        cardDeckManager.isSolitaire = true;
-        cardDeckManager.dealButton.gameObject.SetActive(false);
-        cardDeckManager.discardPile.gameObject.SetActive(false);
-        cardDeckManager.dealCardsButton.gameObject.SetActive(true);
-        cardDeckManager.emptyDeckImage.gameObject.SetActive(true);
-        cardDeckManager.solitairePilePlacements.gameObject.SetActive(true);
+        base.Start();
+        ResetCardBoard();
     }
 
     public void DealCardFromStack()
     {
-        GameObject firstCard = remainingCards.FirstOrDefault();
+        GameObject firstCard = remainingDeckCards.FirstOrDefault();
         if (firstCard != null) 
         {
             dealtCards.Add(firstCard);
             float cardWidth = 150f;
             float xOffset = 10f + cardWidth;
             DealCard(firstCard, xOffset);
-            remainingCards.Remove(firstCard);
+            remainingDeckCards.Remove(firstCard);
         }
         else
         {
@@ -54,7 +50,7 @@ public class SolitaireGameManager : MonoBehaviour
             {
                 if (!cardDragScript.HasLeftDeck)
                 {
-                    remainingCards.Add(card);
+                    remainingDeckCards.Add(card);
                     rect.anchoredPosition = deckRect.anchoredPosition;
                     cardDragScript.FlipCard();
                 }
@@ -78,8 +74,7 @@ public class SolitaireGameManager : MonoBehaviour
     public void SetupSolitaireBoard()
     {
         dealtCards = new List<GameObject>();
-        remainingCards = new List<GameObject>();
-        HandleHidingObjects();
+        remainingDeckCards = new List<GameObject>();
         int[] cardsInColumns = { 1, 2, 3, 4, 5, 6, 7 };
         float yOffset = -35f;
         float cardWidth = 150f; // Adjust this based on your card size
@@ -93,7 +88,7 @@ public class SolitaireGameManager : MonoBehaviour
                 bool isFaceUp = (j == cardsInColumns[i] - 1);
 
                 // Use SpawnCard from CardDeckManager
-                GameObject newCard = cardDeckManager.SpawnCard(isFaceUp);
+                GameObject newCard = SpawnCard(isFaceUp);
 
                 if (newCard != null)
                 {
@@ -106,11 +101,11 @@ public class SolitaireGameManager : MonoBehaviour
         }
         float stockpileXOffset = startingXOffset;
         float stockpileYOffset = 250f;
-        while (cardDeckManager.remainingCards.Count > 0) 
+        while (remainingCards.Count > 0) 
         {
             // Spawn face-down cards
-            GameObject stockCard = cardDeckManager.SpawnCard(false);
-            remainingCards.Add(stockCard);
+            GameObject stockCard = SpawnCard(false);
+            remainingDeckCards.Add(stockCard);
 
             if (stockCard != null)
             {
@@ -120,6 +115,12 @@ public class SolitaireGameManager : MonoBehaviour
                 rect.localScale = Vector3.one;
             }
         }
+    }
 
+    public new void ResetCardBoard()
+    {   
+        base.ResetCardBoard();
+        Debug.Log("Game Reset. Deck is full again!");
+        SetupSolitaireBoard();
     }
 }

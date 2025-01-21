@@ -10,7 +10,7 @@ public class CardDrag : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, I
     private RectTransform rectTransform;
     private CanvasGroup canvasGroup;
     private Vector2 originalPosition;
-    private Transform originalParent; // Keep track of the original parent
+    private Transform originalParent;
     private Canvas canvas;
     private float clickStartTime;
     private const float clickThreshold = 0.2f;
@@ -21,7 +21,6 @@ public class CardDrag : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, I
 
     public RawImage frontImage;
     public RawImage backImage;
-    public GameObject discardArea;
 
     private void Awake()
     {
